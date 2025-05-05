@@ -1,0 +1,73 @@
+/*
+  ------------------------------------------------------------------------------
+  © 2025 Javier Siliacay | USTP - All Rights Reserved.
+
+  This source code is the intellectual property of the author and is provided 
+  for educational and non-commercial use only. Unauthorized copying, modification, 
+  distribution, or use of this code for commercial purposes is strictly prohibited 
+  without prior written consent from the author.
+
+  Violation of these terms may result in legal action under applicable intellectual 
+  property laws.
+
+  For permissions, contact: siliacay.javier@ustp.edu.ph
+  ------------------------------------------------------------------------------
+*/
+
+#define PH_PIN A0  // pH Sensor analog pin
+
+#define RED_LED     2   // Unsafe
+#define BLUE_LED    3   // Slightly Acidic
+#define YELLOW_LED  4   // Slightly Basic
+#define GREEN_LED   5   // Safe
+
+void setup() {
+  Serial.begin(9600);
+
+  pinMode(RED_LED, OUTPUT);
+  pinMode(BLUE_LED, OUTPUT);
+  pinMode(YELLOW_LED, OUTPUT);
+  pinMode(GREEN_LED, OUTPUT);
+
+  digitalWrite(RED_LED, LOW);
+  digitalWrite(BLUE_LED, LOW);
+  digitalWrite(YELLOW_LED, LOW);
+  digitalWrite(GREEN_LED, LOW);
+
+  Serial.println("pH Detection Sensor System Initialized");
+}
+
+void loop() {
+  int sensorValue = analogRead(PH_PIN);
+  float voltage = sensorValue * (5.0 / 1023.0);
+  float pH = 7 + ((2.5 - voltage) / 0.18);  // Adjust formula if needed
+
+  Serial.print("Analog: ");
+  Serial.print(sensorValue);
+  Serial.print(" | Voltage: ");
+  Serial.print(voltage, 2);
+  Serial.print(" V | pH: ");
+  Serial.println(pH, 2);
+
+  // Reset all LEDs
+  digitalWrite(RED_LED, LOW);
+  digitalWrite(BLUE_LED, LOW);
+  digitalWrite(YELLOW_LED, LOW);
+  digitalWrite(GREEN_LED, LOW);
+
+  // LED logic based on pH conditions
+  if (pH < 5.0 || pH > 9.0) {
+    digitalWrite(RED_LED, HIGH);     // Unsafe
+  }
+  if (pH >= 5.0 && pH < 7.0) {
+    digitalWrite(BLUE_LED, HIGH);    // Slightly Acidic
+  }
+  if (pH >= 7.0 && pH <= 7.9) {
+    digitalWrite(GREEN_LED, HIGH);   // Safe
+  }
+  if (pH >= 8.0 && pH <= 9.0) {
+    digitalWrite(YELLOW_LED, HIGH);  // Slightly Basic
+  }
+
+  delay(500);
+}
