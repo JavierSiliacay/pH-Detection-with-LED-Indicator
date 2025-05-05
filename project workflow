@@ -1,0 +1,50 @@
+1. Initialization:
+
+Set up the pH sensor and LEDs with the respective pins on the Arduino.
+
+Initialize the serial communication to display pH values on the serial monitor.
+
+Set all LEDs to LOW initially (off state).
+
+2. Sensor Reading:
+
+Continuously read the analog value from the pH sensor.
+
+Convert the analog value to a corresponding voltage.
+
+Use the voltage to calculate the pH value based on a predefined formula.
+
+3. pH Level Evaluation:
+
+Based on the calculated pH value, determine the pH condition:
+
+If the pH is below 5.0 or above 9.0, the solution is unsafe.
+
+If the pH is between 5.0 and 7.0, the solution is slightly acidic.
+
+If the pH is between 7.0 and 7.9, the solution is safe.
+
+If the pH is between 8.0 and 9.0, the solution is slightly basic.
+
+4. LED Control:
+
+Reset all LEDs to LOW.
+
+Light up the appropriate LED based on the pH value:
+
+Red LED for unsafe pH.
+
+Blue LED for slightly acidic pH.
+
+Green LED for safe pH.
+
+Yellow LED for slightly basic pH.
+
+5. Displaying pH Value:
+
+Print the analog value, voltage, and calculated pH value to the serial monitor for real-time monitoring.
+
+6. Continuous Operation:
+
+Repeat the process every 500 milliseconds (delay) to continuously monitor and update the pH value.
+
